@@ -26,6 +26,9 @@ class UsersController < ApplicationController
     # Sign-up Param => params => user => user.save
     @user = User.new(user_params)
     if @user.save
+      # ユーザ登録と同時にログインさせる
+      reset_session
+      log_in @user
       # => Success / alert-success
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user # => GET /users/:id
