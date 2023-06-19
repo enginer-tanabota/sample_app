@@ -9,6 +9,8 @@ class SessionsController < ApplicationController
       reset_session
       # ユーザログイン後にユーザ情報ページにリダイレクトする
       log_in user
+      # ログイン状態を保持
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to user
     else
       # エラーメッセ維持を作成して、newアクションへ
@@ -18,7 +20,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url, status: :see_other
   end
 
