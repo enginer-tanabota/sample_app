@@ -30,13 +30,12 @@ class UsersController < ApplicationController
     # Sign-up Param => params => user => user.save
     @user = User.new(user_params)
     if @user.save
-      # ユーザ登録と同時にログインさせる
-      reset_session
-      log_in @user
-      # => Success / alert-success
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user # => GET /users/:id
-
+      # ユーザに登録メールを送る、トークンはmodelでDBに新規追加される際に
+      # create_activation_digest内で取得済みなのでメール送信が可能
+      # UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       # => Failure
       render 'new', status: :unprocessable_entity
