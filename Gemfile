@@ -31,6 +31,12 @@ group :development do
   gem "solargraph",  "0.48.0"
 end
 
+# rails-tutorial except 13.4.4
+# group :production do
+#   gem "pg",         "1.3.5"
+#   gem "aws-sdk-s3", "1.114.0", require: false
+# end
+
 group :test do
   gem "capybara",                 "3.38.0"
   gem "selenium-webdriver",       "4.8.3"
